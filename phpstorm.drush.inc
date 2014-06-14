@@ -56,6 +56,12 @@ function drush_phpstorm_metadata() {
     $map["\\Drupal::service('')"][$id] = '\\' . get_class($class);
   }
 
+  // Entity Manager - getStorage
+  foreach (\Drupal::entityManager()->getDefinitions() as $type => $definition) {
+    $class = Drupal::entityManager()->getStorage($type);
+    $map["\\Drupal::entityManager()->getStorage('')"][$type] = '\\' . get_class($class);
+  }
+
   $content = _drush_phpstorm_metadata_phpstorm_metadata_template($map);
   file_put_contents(DRUPAL_ROOT . '/.phpstorm.meta.php', $content);
 }
